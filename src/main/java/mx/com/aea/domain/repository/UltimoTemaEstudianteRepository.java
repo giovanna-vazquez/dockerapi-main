@@ -7,12 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-
-public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
+public interface UltimoTemaEstudianteRepository /*extends JpaRepository<UltimoTemaEstudiante, Integer>*/ {
 
     /*@Query(value = "select e from Estudiante as e where e.matricula = ?1")
-    Estudiante findByEnrollment(String registrationnumber);*/
+    Estudiante findByEnrollment(String registrationnumber);
 
     @Query(value = "CALL GET_LAST_COURSE(:registrationnumber);", nativeQuery = true)
-    Object findByEnrollment(@Param("registrationnumber") String registrationnumber);
+    UltimoTemaEstudiante findByEnrollment(@Param("registrationnumber") String registrationnumber);*/
 }

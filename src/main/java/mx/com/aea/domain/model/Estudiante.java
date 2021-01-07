@@ -18,7 +18,6 @@ public class Estudiante {
     private String apellido;
     private String email;
     private String telefono;
-    private String ultimo_curso;
 
 
     public void setId(Long id) {
@@ -69,11 +68,4 @@ public class Estudiante {
         this.telefono = telefono;
     }
 
-    public String getUltimo_curso() {
-        return ultimo_curso;
-    }
-
-    public void setUltimo_curso(String ultimo_curso) {
-        this.ultimo_curso = ultimo_curso;
-    }
 }
