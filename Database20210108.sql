@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `singularagil` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `singularagil`;
 -- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: singularagil
@@ -34,7 +32,7 @@ CREATE TABLE `bitacora` (
   KEY `id_tema` (`id_tema`),
   CONSTRAINT `bitacora_ibfk_1` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id`),
   CONSTRAINT `bitacora_ibfk_2` FOREIGN KEY (`id_tema`) REFERENCES `temas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +41,7 @@ CREATE TABLE `bitacora` (
 
 LOCK TABLES `bitacora` WRITE;
 /*!40000 ALTER TABLE `bitacora` DISABLE KEYS */;
-INSERT INTO `bitacora` VALUES (4,1,1,'2021-01-05 13:21:57'),(5,1,2,'2021-01-05 13:22:15'),(6,1,3,'2021-01-05 13:22:31'),(7,2,3,'2021-01-05 13:22:58'),(8,2,6,'2021-01-05 13:23:05'),(9,2,7,'2021-01-05 13:23:14'),(10,3,1,'2021-01-05 13:23:28'),(11,3,3,'2021-01-05 13:23:35'),(12,3,10,'2021-01-05 13:23:44'),(13,3,8,'2021-01-05 13:23:53'),(14,3,9,'2021-01-05 13:24:11'),(21,1,4,'2021-01-07 22:54:51'),(22,1,4,'2021-01-07 05:07:24'),(23,1,4,'2021-01-07 17:11:53');
+INSERT INTO `bitacora` VALUES (4,1,1,'2021-01-05 13:21:57'),(5,1,2,'2021-01-05 13:22:15'),(6,1,3,'2021-01-05 13:22:31'),(7,2,3,'2021-01-05 13:22:58'),(8,2,6,'2021-01-05 13:23:05'),(9,2,7,'2021-01-05 13:23:14'),(10,3,1,'2021-01-05 13:23:28'),(11,3,3,'2021-01-05 13:23:35'),(12,3,10,'2021-01-05 13:23:44'),(13,3,8,'2021-01-05 13:23:53'),(14,3,9,'2021-01-05 13:24:11'),(21,1,4,'2021-01-07 22:54:51'),(22,1,4,'2021-01-07 05:07:24'),(23,1,4,'2021-01-07 17:11:53'),(24,3,9,'2021-01-08 14:59:39'),(25,3,7,'2021-01-08 17:40:48'),(26,3,5,'2021-01-08 17:40:53');
 /*!40000 ALTER TABLE `bitacora` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,6 +159,33 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GET_REMAINING_TOPICS` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_REMAINING_TOPICS`(IN param_id_estudiante bigint)
+BEGIN
+	DECLARE totalContenidosRevisados int default null;
+
+	select count(DISTINCT bitacora.id_tema) into totalContenidosRevisados  from bitacora where bitacora.id_estudiante = param_id_estudiante ; 
+	
+    IF totalContenidosRevisados > 6 THEN
+        select * from temas where temas.id not in (select  bitacora.id_tema  from bitacora where bitacora.id_estudiante = param_id_estudiante) ;
+	ELSE
+		select * from temas;
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -171,4 +196,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-07 17:44:28
+-- Dump completed on 2021-01-08 18:18:59
