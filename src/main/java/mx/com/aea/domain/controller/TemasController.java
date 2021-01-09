@@ -2,6 +2,7 @@ package mx.com.aea.domain.controller;
 
 import mx.com.aea.domain.model.Estudiante;
 import mx.com.aea.domain.model.Temas;
+import mx.com.aea.domain.model.UltimoTemaEstudiante;
 import mx.com.aea.domain.repository.EstudianteRepository;
 import mx.com.aea.domain.repository.TemasRepository;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,11 @@ public class TemasController {
     @GetMapping("/topics/")
     public List<Temas> getAllTopics() {
         return temasRepository.findAll();
+    }
+
+    @GetMapping("/remainingTopics/{id_estudiante}")
+    public List<Temas> getRemainingTopics(@PathVariable long id_estudiante) {
+        return temasRepository.getRemainingTopics(id_estudiante);
     }
 
     @PostMapping("/topics/")
