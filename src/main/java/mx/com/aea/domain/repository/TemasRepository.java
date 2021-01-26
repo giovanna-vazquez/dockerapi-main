@@ -11,4 +11,8 @@ public interface TemasRepository extends JpaRepository<Temas, Integer> {
 
     @Query(value = "CALL GET_REMAINING_TOPICS(:param_id_estudiante);", nativeQuery = true)
     List<Temas> getRemainingTopics(@Param("param_id_estudiante") long param_id_estudiante);
+
+
+    @Query(value = "select t.id, t.titulo from Temas as t")
+    List<Object> findListTopics();
 }
