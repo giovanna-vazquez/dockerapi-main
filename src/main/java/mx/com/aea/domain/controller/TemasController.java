@@ -25,6 +25,11 @@ public class TemasController {
         return temasRepository.findAll();
     }
 
+    @GetMapping("/topics/{id}")
+    public Optional<Temas> getTopic(@PathVariable Integer id) {
+        return temasRepository.findById(id);
+    }
+
     @GetMapping("/remainingTopics/{id_estudiante}")
     public List<Temas> getRemainingTopics(@PathVariable long id_estudiante) {
         return temasRepository.getRemainingTopics(id_estudiante);
